@@ -1,0 +1,103 @@
+:root {
+    /* Primary */
+    --BrightBlue: hsl(220, 98%, 61%);
+    --CheckBackground: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+
+    /* Dark Theme */
+    --VeryLightGray: hsl(0, 0%, 98%);
+    --VeryLightGrayishBlue: hsl(236, 33%, 92%);
+    --LightGrayishBlue: hsl(233, 11%, 84%);
+    --DarkGrayishBlue: hsl(236, 9%, 61%);
+    --VeryDarkGrayishBlue: hsl(235, 19%, 35%);
+
+    /* Light Theme */
+    --VeryDarkBlue: hsl(235, 21%, 11%);
+    --VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+    --LightGrayishBlue: hsl(234, 39%, 85%);
+    --LightGrayishBlue--hover: hsl(236, 33%, 92%);
+    --DarkGrayishBlue: hsl(234, 11%, 52%);
+    --VeryDarkGrayishBlue: hsl(233, 14%, 35%);
+    --VeryDarkGrayishBlue2: hsl(237, 14%, 26%);
+}
+
+.Card {
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--VeryDarkDesaturatedBlue);
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px hsl(0, 0, 0, 0.5);
+}
+
+.todo_list {
+    background-color: transparent;
+}
+
+.todo_item {
+    width: 100%;
+    font-size: 0.8rem;
+    height: 3rem;
+    outline: transparent;
+    border: none;
+    background-color: inherit;
+    border-bottom: 1px solid var(--VeryDarkGrayishBlue2);
+    display: flex;
+    align-items: center;
+    color: var(--LightGrayishBlue);
+}
+
+
+.todo_item--btn {
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.todo_item--btn img {
+    height: 1rem;
+    width: 1rem;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+}
+
+.todo_item--btn:hover img {
+    opacity: 1;
+}
+
+
+.controls {
+    padding: 0 1rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7em;
+    font-weight: 700;
+    color: var(--VeryDarkGrayishBlue);
+}
+
+.segregate-btn,
+.clear-btn {
+    background: none;
+    border: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--VeryDarkGrayishBlue);
+    transition: all 200ms ease-in-out;
+   
+}
+
+.segregate-btn:hover,
+.segregate-btn:active,
+.clear-btn:hover,
+.clear-btn:active {
+    color: var(--BrightBlue);
+}
+
+.active {
+    color: $BrightBlue;
+}

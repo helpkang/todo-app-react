@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,600;0,700;1,400");
+
+:root {
+    /* Primary */
+    --BrightBlue: hsl(220, 98%, 61%);
+    --CheckBackground: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+
+    /* Dark Theme */
+    --VeryLightGray: hsl(0, 0%, 98%);
+    --VeryLightGrayishBlue: hsl(236, 33%, 92%);
+    --LightGrayishBlue: hsl(233, 11%, 84%);
+    --DarkGrayishBlue: hsl(236, 9%, 61%);
+    --VeryDarkGrayishBlue: hsl(235, 19%, 35%);
+
+    /* Light Theme */
+    --VeryDarkBlue: hsl(235, 21%, 11%);
+    --VeryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+    --LightGrayishBlue: hsl(234, 39%, 85%);
+
+    --LightGrayishBlue--hover: hsl(236, 33%, 92%);
+    --DarkGrayishBlue: hsl(234, 11%, 52%);
+    --VeryDarkGrayishBlue: hsl(233, 14%, 35%);
+    --VeryDarkGrayishBlue2: hsl(237, 14%, 26%);
+
+    font-family: "Josefin Sans", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+    background-color: hsl(235, 21%, 11%);
+    background-image: url("./assets/bg-desktop-dark.jpg");
+    background-position: top;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: Var(--LightGrayishBlue);
+}
+
+.container {
+    width: clamp(20rem, s10vw + 20rem, 42rem);
+
+}
+
+.new_todo {
+    height: 3rem;
+    border-radius: 5px;
+    background-color: var(--VeryDarkDesaturatedBlue);
+    border: none;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.new_todo input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    outline: transparent;
+    color: var(--DarkGrayishBlue);
+}
+
+.new_todo-btn {
+    height: 100%;
+    width: 50px;
+    background-color: transparent;
+    color: var(--VeryDarkGrayishBlue);
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 200ms ease-in-out;
+}
+
+.new_todo-btn:hover {
+    color: var(--BrightBlue);
+}
+
+.checkbox-container {
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.checkbox {
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid var(--VeryDarkGrayishBlue2);
+    cursor: pointer;
+}
+
+.checkbox:hover ~ .checkbox::before {
+    content: "";
+    background-color: transparent;
+    background-image: linear-gradient(to top left, (#d05aff, #5af4ff));
+    display: block;
+}
+
+.checkbox:after {
+    content: "";
+    /* position: absolute; */
+    display: none;
+    /* top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px; */
+}
+
+.checkbox-checked {
+    background-color: transparent;
+    background: linear-gradient(to top left, #d05aff, #5af4ff);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    z-index: 2;
+    border: 1px solid var(--VeryDarkGrayishBlue2);
+    position: relative;
+}
+
+.checkbox-checked::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    content: "";
+    display: block;
+    background-image: url("./assets/iconCheck.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: translate(-50%, -50%);
+}
+
+
+.reorder {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--VeryDarkGrayishBlue);
+}
+
+.attribution {
+    font-size: 11px;
+    text-align: center;
+}
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
