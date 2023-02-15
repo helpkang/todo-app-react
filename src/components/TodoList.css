@@ -99,7 +99,7 @@
 }
 
 .active {
-    color: $BrightBlue;
+    color: var(--BrightBlue);
 }
 
 .todo--completed {

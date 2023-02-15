@@ -10,12 +10,15 @@ import { useState } from "react";
 
 function App() {
     const dispatch = useDispatch();
-    const [name, setName] = useState();
-
+    const [name, setName] = useState('');
 
     const addTodoHandler = () => {
+        if (!name) {
+            alert("You have to entere a name");
+            return
+        }
         dispatch(addTodo({ id: Math.random() * 1000, name, completed: false }));
-        setName("")
+        setName("");
     };
 
     return (
@@ -36,6 +39,7 @@ function App() {
                         {/* <button className="checkbox checkbox-checked" onClick={checkBoxHandler}></button> */}
                     </Box>
                     <input
+                        required
                         value={name}
                         type="text"
                         placeholder="Create a new todo"

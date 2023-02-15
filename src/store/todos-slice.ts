@@ -5,11 +5,11 @@ import { Todos } from "../assets/FakeData";
 //     todos: { [id: number; name: string; completed: boolean] };
 // }
 
-const initialState = Todos;
+const initialState: object[] = [];
 
 const TodoSlice = createSlice({
     name: "todo",
-    initialState: { value: Todos },
+    initialState: { value: initialState },
     reducers: {
         addTodo: (state, action) => {
             state.value.push(action.payload);

@@ -5,13 +5,13 @@ import { Box } from "@mui/material";
 import IconCross from "../assets/iconCross.svg";
 import { completeTodo } from "../store/todos-slice";
 
-const TodoItem = ({ id, name, deleteHandler }) => {
-    const [completed, setCompleted] = useState(false);
+const TodoItem = ({ id, name, deleteHandler, completed }) => {
+    // const [completed, setCompleted] = useState(false);
     const dispatch = useDispatch();
     // const todos = useSelector((state) => state.todos.value);
 
     function completedHandler() {
-        setCompleted(!completed);
+        completed = !completed;
         dispatch(completeTodo({ id: id, completed: completed }));
     }
 
