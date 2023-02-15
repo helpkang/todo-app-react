@@ -9,10 +9,14 @@ import { addTodo } from "./store/todos-slice";
 import { useState } from "react";
 
 function App() {
-
     const dispatch = useDispatch();
     const [name, setName] = useState();
 
+
+    const addTodoHandler = () => {
+        dispatch(addTodo({ id: Math.random() * 1000, name, completed: false }));
+        setName("")
+    };
 
     return (
         <div className="containter">
@@ -31,13 +35,16 @@ function App() {
                     >
                         {/* <button className="checkbox checkbox-checked" onClick={checkBoxHandler}></button> */}
                     </Box>
-                    <input value={name} type="text" placeholder="Create a new todo" onChange={(e) => setName(e.target.value)} />
+                    <input
+                        value={name}
+                        type="text"
+                        placeholder="Create a new todo"
+                        onChange={(e) => setName(e.target.value)}
+                    />
                     <Box>
                         <button
                             className="new_todo-btn"
-                            onClick={() => {
-                                dispatch(addTodo({id: Math.random() * 1000, name, completed: false}));
-                            }}
+                            onClick={addTodoHandler}
                         >
                             Add
                         </button>

@@ -101,3 +101,8 @@
 .active {
     color: $BrightBlue;
 }
+
+.todo--completed {
+    color: var(--DarkGrayishBlue);
+    text-decoration: line-through;
+}

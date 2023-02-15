@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TodoList.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
-import IconCross from '../assets/iconCross.svg'
-import { deleteTodo } from "../store/todos-slice";
+import IconCross from "../assets/iconCross.svg";
+import { completeTodo } from "../store/todos-slice";
 
-const TodoItem = ({id, name, completed deleteHandler}) => {
-const dispatch = useDispatch();
+const TodoItem = ({ id, name, deleteHandler }) => {
+    const [completed, setCompleted] = useState(false);
+    const dispatch = useDispatch();
+    // const todos = useSelector((state) => state.todos.value);
+
+    function completedHandler() {
+        setCompleted(!completed);
+        dispatch(completeTodo({ id: id, completed: completed }));
+    }
 
     return (
         <Box className="todo_item">
-
             <Box
                 className="checkbox_container"
                 sx={{
@@ -21,14 +27,19 @@ const dispatch = useDispatch();
                     justifyContent: "center",
                 }}
             >
-                <button className={`${completed ? 'checkbox checkbox-checked' : 'checkbox'}`}></button>
+                <button
+                    onClick={completedHandler}
+                    className={`${completed ? "checkbox-checked" : "checkbox"}`}
+                ></button>
             </Box>
-            <Box sx={{flex: '1', padding: '10px'}}>{name}</Box>
+            <Box
+                sx={{ flex: "1", padding: "10px" }}
+                className={`${completed ? 'todo--completed' : ''}`}
+            >{name}</Box>
             <Box>
                 <button className="todo_item--btn" onClick={deleteHandler}>
-                  <img src={IconCross}></img>
+                    <img src={IconCross}></img>
                 </button>
-            
             </Box>
         </Box>
     );
