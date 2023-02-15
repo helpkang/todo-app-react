@@ -5,7 +5,9 @@ import { Todos } from "../assets/FakeData";
 //     todos: { [id: number; name: string; completed: boolean] };
 // }
 
-const initialState: object[] = [];
+const todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+const initialState: object[] = todos;
 
 const TodoSlice = createSlice({
     name: "todo",

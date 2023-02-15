@@ -19,4 +19,5 @@
 .toggle_mode button {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }

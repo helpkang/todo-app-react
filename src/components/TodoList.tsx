@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { deleteTodo, clearCompleted } from "../store/todos-slice";
@@ -22,6 +22,9 @@ const Todolist = () => {
         }
     );
 
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos]) 
 
     const currentTodos =
         visibleTodos == "all"
