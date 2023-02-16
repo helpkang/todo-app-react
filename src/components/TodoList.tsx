@@ -7,24 +7,28 @@ import TodoItem from "./TodoItem";
 import "./TodoList.css";
 import { Todos } from "../assets/FakeData";
 
-const Todolist = () => {
+const Todolist = ({ colorTheme }) => {
     const [visibleTodos, setVisibleTodos] = useState("all");
     const dispatch = useDispatch();
     const todos = useSelector((state) => state.todos.value);
-    const activeTodos = todos && todos.filter(
-        (item: { id: number; name: string; completed: boolean }) => {
-            return item.completed == false;
-        }
-    );
-    const completedTodos = todos && todos.filter(
-        (item: { id: number; name: string; completed: boolean }) => {
-            return item.completed == true;
-        }
-    );
+    const activeTodos =
+        todos &&
+        todos.filter(
+            (item: { id: number; name: string; completed: boolean }) => {
+                return item.completed == false;
+            }
+        );
+    const completedTodos =
+        todos &&
+        todos.filter(
+            (item: { id: number; name: string; completed: boolean }) => {
+                return item.completed == true;
+            }
+        );
 
     useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
-    }, [todos]) 
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }, [todos]);
 
     const currentTodos =
         visibleTodos == "all"
@@ -38,45 +42,64 @@ const Todolist = () => {
     return (
         <Box className="Card">
             <Box className="todo_list">
-                {todos && currentTodos.map(
-                    (item: {
-                        id: number;
-                        name: string;
-                        completed: boolean;
-                    }) => (
-                        <TodoItem
-                            deleteHandler={() =>
-                                dispatch(deleteTodo({ id: item.id }))
-                            }
-                            key={item.id}
-                            id={item.id}
-                            completed={item.completed}
-                            name={item.name}
-                        />
-                    )
-                )}
-                <Box className="controls">
+                {todos &&
+                    currentTodos.map(
+                        (item: {
+                            id: number;
+                            name: string;
+                            completed: boolean;
+                        }, index:number) => (
+                            <TodoItem
+                                deleteHandler={() =>
+                                    dispatch(deleteTodo({ id: item.id }))
+                                }
+                                index={index}
+                                key={item.id}
+                                id={item.id}
+                                completed={item.completed}
+                                name={item.name}
+                                colorTheme={colorTheme}
+                                currentTodos={currentTodos}
+                            />
+                        )
+                    )}
+                <Box className="controls" data-theme={colorTheme}>
                     <Box>
-                        <span>{currentTodos?.length | 0 } items left</span>
+                        <span>{currentTodos?.length | 0} items left</span>
                     </Box>
-                    <Box className="segregate">
-                        <button className={`segregate-btn ${(visibleTodos == 'all') && "active"}`} id="all"  onClick={() => setVisibleTodos("all")}>
+                    <Box className="segregate" data-theme={colorTheme}>
+                        <button
+                            className={`segregate-btn ${
+                                visibleTodos == "all" && "active"
+                            }`}
+                            id="all"
+                            onClick={() => setVisibleTodos("all")}
+                        >
                             All
                         </button>
                         <button
-                            className={`segregate-btn ${(visibleTodos == 'active') && "active"}`}
+                            className={`segregate-btn ${
+                                visibleTodos == "active" && "active"
+                            }`}
                             id="active"
                             onClick={() => setVisibleTodos("active")}
                         >
                             Active
                         </button>
-                        <button className={`segregate-btn ${(visibleTodos == 'completed') && "active"}`} id="completed" onClick={() => setVisibleTodos("completed")}>
+                        <button
+                            className={`segregate-btn ${
+                                visibleTodos == "completed" && "active"
+                            }`}
+                            id="completed"
+                            onClick={() => setVisibleTodos("completed")}
+                        >
                             Completed
                         </button>
                     </Box>
-                    <Box className="clear">
+                    <Box className="clear" data-theme={colorTheme}>
                         <button
                             className="clear-btn"
+                            data-theme={colorTheme}
                             onClick={() => dispatch(clearCompleted({ todos }))}
                         >
                             Clear Completed

@@ -5,33 +5,30 @@ import iconMoon from "../assets/iconMoon.svg";
 import iconSun from "../assets/iconSun.svg";
 import { toggleTheme } from "../store/theme-slice";
 
-const Header = () => {
-    const [mode, setMode] = useState('dark');
-    const theme = useSelector((state) => state.theme);
+const Header = ({switchTheme, colorTheme}) => {
+
     const dispatch = useDispatch();
 
-    useEffect(() => {
-       setMode(theme);
-       console.log(theme.value)
-    }, [theme, mode]);
+    // useEffect(() => {
+    //    setMode(theme);
+    //    console.log(theme.value)
+    // }, [theme, mode]);
 
     return (
         <div className="header">
             <h1>T O D O</h1>
             <div className="toggle_mode">
-                {mode == "dark" ? (
+                {colorTheme == "dark" ? (
                     <button
-                        onClick={() => {
-                            dispatch(toggleTheme({ value: "light" }));
-                        }}
+                       
+                    onClick={switchTheme}
                     >
                         <img src={iconSun} alt="lightmode" />
                     </button>
                 ) : (
                     <button
-                        onClick={() => {
-                            dispatch(toggleTheme({ value: "dark" }));
-                        }}
+                  
+                        onClick={switchTheme}
                     >
                         <img src={iconMoon} alt="darkmode" />
                     </button>

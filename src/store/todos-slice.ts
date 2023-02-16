@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Todos } from "../assets/FakeData";
 
 // export interface TodoState {
 //     todos: { [id: number; name: string; completed: boolean] };

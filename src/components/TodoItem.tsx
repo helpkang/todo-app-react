@@ -5,7 +5,14 @@ import { Box } from "@mui/material";
 import IconCross from "../assets/iconCross.svg";
 import { completeTodo } from "../store/todos-slice";
 
-const TodoItem = ({ id, name, deleteHandler, completed }) => {
+const TodoItem = ({
+    id,
+    name,
+    deleteHandler,
+    currentTodos,
+    index,
+    completed,
+}) => {
     // const [completed, setCompleted] = useState(false);
     const dispatch = useDispatch();
     // const todos = useSelector((state) => state.todos.value);
@@ -15,8 +22,12 @@ const TodoItem = ({ id, name, deleteHandler, completed }) => {
         dispatch(completeTodo({ id: id, completed: completed }));
     }
 
+
     return (
-        <Box className="todo_item">
+        <div
+            className="todo_item"
+ 
+        >
             <Box
                 className="checkbox_container"
                 sx={{
@@ -34,14 +45,16 @@ const TodoItem = ({ id, name, deleteHandler, completed }) => {
             </Box>
             <Box
                 sx={{ flex: "1", padding: "10px" }}
-                className={`${completed ? 'todo--completed' : ''}`}
-            >{name}</Box>
+                className={`${completed ? "todo--completed" : ""}`}
+            >
+                {name}
+            </Box>
             <Box>
                 <button className="todo_item--btn" onClick={deleteHandler}>
                     <img src={IconCross}></img>
                 </button>
             </Box>
-        </Box>
+        </div>
     );
 };
 
