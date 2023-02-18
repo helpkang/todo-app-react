@@ -5,6 +5,17 @@ import { Box } from "@mui/material";
 import IconCross from "../assets/iconCross.svg";
 import { completeTodo } from "../store/todos-slice";
 
+
+export type TodoProps = {
+    id: number;
+    name: string;
+    deleteHandler: () => {};
+    currentTodos: string;
+    index: number;
+    completed: boolean;
+    colorTheme: string;
+}
+
 const TodoItem = ({
     id,
     name,
@@ -12,7 +23,8 @@ const TodoItem = ({
     currentTodos,
     index,
     completed,
-}) => {
+    colorTheme,
+}: TodoProps) => {
     // const [completed, setCompleted] = useState(false);
     const dispatch = useDispatch();
     // const todos = useSelector((state) => state.todos.value);
@@ -22,12 +34,8 @@ const TodoItem = ({
         dispatch(completeTodo({ id: id, completed: completed }));
     }
 
-
     return (
-        <div
-            className="todo_item"
- 
-        >
+        <div className="todo_item">
             <Box
                 className="checkbox_container"
                 sx={{

@@ -4,9 +4,22 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 //     todos: { [id: number; name: string; completed: boolean] };
 // }
 
-const todos = JSON.parse(localStorage.getItem('todos')) || [];
+export interface TodosType {
+    id: number;
+    name: string;
+    completed: boolean;
+}
 
-const initialState: object[] = todos;
+const todos = localStorage.getItem("todos") || [];
+
+let parsed;
+
+if (typeof todos === 'string') {
+    parsed = JSON.parse(todos) 
+    
+}
+
+const initialState: TodosType[] = parsed;
 
 const TodoSlice = createSlice({
     name: "todo",

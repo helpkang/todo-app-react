@@ -5,9 +5,12 @@ import { deleteTodo, clearCompleted } from "../store/todos-slice";
 import TodoReducer from "../store/todos-slice";
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
-import { Todos } from "../assets/FakeData";
 
-const Todolist = ({ colorTheme }) => {
+
+export interface ThemeProps  {
+    colorTheme: string;
+  }
+const Todolist = ({colorTheme}: ThemeProps) => {
     const [visibleTodos, setVisibleTodos] = useState("all");
     const dispatch = useDispatch();
     const todos = useSelector((state) => state.todos.value);
@@ -25,6 +28,7 @@ const Todolist = ({ colorTheme }) => {
                 return item.completed == true;
             }
         );
+        console.log(colorTheme)
 
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
@@ -43,7 +47,7 @@ const Todolist = ({ colorTheme }) => {
         <Box className="Card">
             <Box className="todo_list">
                 {todos &&
-                    currentTodos.map(
+                    currentTodos?.map(
                         (item: {
                             id: number;
                             name: string;
