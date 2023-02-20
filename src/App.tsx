@@ -16,10 +16,10 @@ const App: React.FC = () => {
     );
 
 
-    const switchTheme = () => {
-        const newTheme = colorTheme === "dark" ? "light" : "dark";
-        setColorTheme(newTheme);
-    };
+    // const switchTheme = () => {
+    //     const newTheme = colorTheme === "dark" ? "light" : "dark";
+    //     setColorTheme(newTheme);
+    // };
 
     const addTodoHandler = () => {
         if (!name) {
@@ -39,7 +39,7 @@ const App: React.FC = () => {
 
     return (
         <div className="container" data-theme={colorTheme}>
-            <Header colorTheme={colorTheme} switchTheme={switchTheme} />
+            <Header colorTheme={colorTheme} setColorTheme={setColorTheme} />
             <Box className="new_todo" data-theme={colorTheme}>
                 <Box
                     className="checkbox_container"

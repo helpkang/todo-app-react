@@ -3,16 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
 import iconMoon from "../assets/iconMoon.svg";
 import iconSun from "../assets/iconSun.svg";
-import { toggleTheme } from "../store/theme-slice";
 
-const Header = ({switchTheme, colorTheme}) => {
+type colorThemeProp = {
+    colorTheme: string
+    setColorTheme: (arg0: string) => {}
+}
 
+ 
+const Header = ({colorTheme, setColorTheme}: colorThemeProp) => {
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //    setMode(theme);
-    //    console.log(theme.value)
-    // }, [theme, mode]);
+    const switchTheme = () => {
+        const newTheme = colorTheme === "dark" ? "light" : "dark";
+        setColorTheme(newTheme);
+    };
+
 
     return (
         <div className="header">
