@@ -12,7 +12,7 @@ export interface ThemeProps {
 const Todolist = ({ colorTheme }: ThemeProps) => {
     const [visibleTodos, setVisibleTodos] = useState("all");
     const dispatch = useDispatch();
-    const todos  = useSelector<RootState, TodosType[]>((state) => state.todos.value);
+    const todos = useSelector<RootState, TodosType[]>((state) => state.todos.value);
     
 
     const activeTodos =
@@ -21,17 +21,17 @@ const Todolist = ({ colorTheme }: ThemeProps) => {
         (item: { id: number; name: string; completed: boolean }) => {
             return item.completed == false;
         }
-        );
+        ) 
     const completedTodos =
         todos &&
         todos.filter(
             (item: { id: number; name: string; completed: boolean }) => {
                 return item.completed == true;
             }
-        );
+        ) 
 
     useEffect(() => {
-        localStorage.setItem("todos", JSON.stringify(todos));
+        todos && localStorage.setItem("todos", JSON.stringify(todos));
     }, [todos]);
 
     const currentTodos =

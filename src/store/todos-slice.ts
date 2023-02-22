@@ -19,14 +19,14 @@ if (typeof todos === 'string') {
     
 }
 
-const initialState: TodosType[] = parsed;
+const initialState: TodosType[] = parsed || [];
 
 const TodoSlice = createSlice({
     name: "todo",
     initialState: { value: initialState },
     reducers: {
         addTodo: (state, action) => {
-            state.value.push(action.payload);
+                    state.value.push(action.payload);
         },
         deleteTodo: (state, action) => {
             state.value = state.value.filter(
