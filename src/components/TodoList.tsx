@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
-import { deleteTodo, clearCompleted } from "../store/todos-slice";
-import TodoReducer from "../store/todos-slice";
+import { deleteTodo, clearCompleted, TodosType } from "../store/todos-slice";
+import { RootState } from "../store/store";
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
 
-
-export interface ThemeProps  {
+export interface ThemeProps {
     colorTheme: string;
-  }
-const Todolist = ({colorTheme}: ThemeProps) => {
+}
+const Todolist = ({ colorTheme }: ThemeProps) => {
     const [visibleTodos, setVisibleTodos] = useState("all");
     const dispatch = useDispatch();
-    const todos = useSelector((state) => state.todos.value);
+    const todos  = useSelector<RootState, TodosType[]>((state) => state.todos.value);
+    
+
     const activeTodos =
-        todos &&
-        todos.filter(
-            (item: { id: number; name: string; completed: boolean }) => {
-                return item.completed == false;
-            }
+    todos &&
+    todos.filter(
+        (item: { id: number; name: string; completed: boolean }) => {
+            return item.completed == false;
+        }
         );
     const completedTodos =
         todos &&
@@ -28,7 +29,6 @@ const Todolist = ({colorTheme}: ThemeProps) => {
                 return item.completed == true;
             }
         );
-        console.log(colorTheme)
 
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
@@ -48,11 +48,14 @@ const Todolist = ({colorTheme}: ThemeProps) => {
             <Box className="todo_list">
                 {todos &&
                     currentTodos?.map(
-                        (item: {
-                            id: number;
-                            name: string;
-                            completed: boolean;
-                        }, index:number) => (
+                        (
+                            item: {
+                                id: number;
+                                name: string;
+                                completed: boolean;
+                            },
+                            index: number
+                        ) => (
                             <TodoItem
                                 deleteHandler={() =>
                                     dispatch(deleteTodo({ id: item.id }))
@@ -62,8 +65,6 @@ const Todolist = ({colorTheme}: ThemeProps) => {
                                 id={item.id}
                                 completed={item.completed}
                                 name={item.name}
-                                colorTheme={colorTheme}
-                                currentTodos={currentTodos}
                             />
                         )
                     )}

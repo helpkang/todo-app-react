@@ -1,33 +1,24 @@
-import React, { useState } from "react";
 import "./TodoList.css";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import IconCross from "../assets/iconCross.svg";
 import { completeTodo } from "../store/todos-slice";
-
 
 export type TodoProps = {
     id: number;
     name: string;
     deleteHandler: () => {};
-    currentTodos: string;
     index: number;
     completed: boolean;
-    colorTheme: string;
-}
+};
 
 const TodoItem = ({
     id,
     name,
     deleteHandler,
-    currentTodos,
-    index,
     completed,
-    colorTheme,
 }: TodoProps) => {
-    // const [completed, setCompleted] = useState(false);
     const dispatch = useDispatch();
-    // const todos = useSelector((state) => state.todos.value);
 
     function completedHandler() {
         completed = !completed;

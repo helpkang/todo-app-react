@@ -12,15 +12,10 @@ const App: React.FC = () => {
     const dispatch = useDispatch();
     const [name, setName] = useState<string>("");
     const [colorTheme, setColorTheme] = useLocalStorage<string>(
-        "theme" ? "dark" : "light", 'dark'
+        "theme" ? "dark" : "light",
+        "dark"
     );
-
-
-    // const switchTheme = () => {
-    //     const newTheme = colorTheme === "dark" ? "light" : "dark";
-    //     setColorTheme(newTheme);
-    // };
-
+    
     const addTodoHandler = () => {
         if (!name) {
             alert("You have to entere a name");
@@ -33,8 +28,9 @@ const App: React.FC = () => {
     useEffect(() => {
         let bgLight: string = "hsl(0, 0%, 98%)";
         let bgDark: string = "hsl(235, 21%, 11%)";
-        colorTheme == 'light' ? document.body.style.backgroundColor = bgLight 
-        : document.body.style.backgroundColor = bgDark;
+        colorTheme == "light"
+            ? (document.body.style.backgroundColor = bgLight)
+            : (document.body.style.backgroundColor = bgDark);
     }, [colorTheme]);
 
     return (
@@ -69,6 +65,6 @@ const App: React.FC = () => {
             <Footer />
         </div>
     );
-}
+};
 
 export default App;
