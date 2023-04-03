@@ -14,9 +14,8 @@ const todos = localStorage.getItem("todos") || [];
 
 let parsed;
 
-if (typeof todos === 'string') {
-    parsed = JSON.parse(todos) 
-    
+if (typeof todos === "string") {
+    parsed = JSON.parse(todos);
 }
 
 const initialState: TodosType[] = parsed || [];
@@ -26,7 +25,7 @@ const TodoSlice = createSlice({
     initialState: { value: initialState },
     reducers: {
         addTodo: (state, action) => {
-                    state.value.push(action.payload);
+            state.value.push(action.payload);
         },
         deleteTodo: (state, action) => {
             state.value = state.value.filter(

@@ -1,5 +1,5 @@
 import "./TodoList.css";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import IconCross from "../assets/iconCross.svg";
 import { completeTodo } from "../store/todos-slice";
@@ -12,12 +12,7 @@ export type TodoProps = {
     completed: boolean;
 };
 
-const TodoItem = ({
-    id,
-    name,
-    deleteHandler,
-    completed,
-}: TodoProps) => {
+const TodoItem = ({ id, name, deleteHandler, completed }: TodoProps) => {
     const dispatch = useDispatch();
 
     function completedHandler() {

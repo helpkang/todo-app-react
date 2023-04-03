@@ -15,7 +15,7 @@ const App: React.FC = () => {
         "theme" ? "dark" : "light",
         "dark"
     );
-    
+
     const addTodoHandler = () => {
         if (!name) {
             alert("You have to entere a name");
