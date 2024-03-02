@@ -1,120 +1,97 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
-import { deleteTodo, clearCompleted, TodosType } from "../store/todos-slice";
-import { RootState } from "../store/store";
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
+import {
+  Todo,
+  TodoItemRepository,
+  TodoListRepository,
+  VisibleType,
+} from "../ioc/interfaceRepository";
+import { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "../ThemeContext";
 
-export interface ThemeProps {
-    colorTheme: string;
+export interface TodoListProps {
+  todoListRepository: TodoListRepository 
+  todoItemRepository: TodoItemRepository;
 }
-const Todolist = ({ colorTheme }: ThemeProps) => {
-    const [visibleTodos, setVisibleTodos] = useState("all");
-    const dispatch = useDispatch();
-    const todos = useSelector<RootState, TodosType[]>(
-        (state) => state.todos.value
-    );
+const Todolist = ({ todoListRepository, todoItemRepository }: TodoListProps) => {
+  const { theme } = useContext(ThemeContext);
+  const todos = todoListRepository.gets();
+  const [visible, setVisible] = useState<VisibleType>("all");
+  const filteredTodos = getFiltered(todoListRepository, visible);
 
-    const activeTodos =
-        todos &&
-        todos.filter(
-            (item: { id: number; name: string; completed: boolean }) => {
-                return item.completed == false;
-            }
-        );
-    const completedTodos =
-        todos &&
-        todos.filter(
-            (item: { id: number; name: string; completed: boolean }) => {
-                return item.completed == true;
-            }
-        );
+  setupEffect(todos);
 
-    useEffect(() => {
-        todos && localStorage.setItem("todos", JSON.stringify(todos));
-    }, [todos]);
-
-    const currentTodos =
-        visibleTodos == "all"
-            ? todos
-            : visibleTodos == "active"
-            ? activeTodos
-            : visibleTodos == "completed"
-            ? completedTodos
-            : todos;
-
-    return (
-        <Box className="Card">
-            <Box className="todo_list">
-                {todos &&
-                    currentTodos?.map(
-                        (
-                            item: {
-                                id: number;
-                                name: string;
-                                completed: boolean;
-                            },
-                            index: number
-                        ) => (
-                            <TodoItem
-                                deleteHandler={() =>
-                                    dispatch(deleteTodo({ id: item.id }))
-                                }
-                                index={index}
-                                key={item.id}
-                                id={item.id}
-                                completed={item.completed}
-                                name={item.name}
-                            />
-                        )
-                    )}
-                <Box className="controls" data-theme={colorTheme}>
-                    <Box>
-                        <span>{currentTodos?.length | 0} items left</span>
-                    </Box>
-                    <Box className="segregate" data-theme={colorTheme}>
-                        <button
-                            className={`segregate-btn ${
-                                visibleTodos == "all" && "active"
-                            }`}
-                            id="all"
-                            onClick={() => setVisibleTodos("all")}
-                        >
-                            All
-                        </button>
-                        <button
-                            className={`segregate-btn ${
-                                visibleTodos == "active" && "active"
-                            }`}
-                            id="active"
-                            onClick={() => setVisibleTodos("active")}
-                        >
-                            Active
-                        </button>
-                        <button
-                            className={`segregate-btn ${
-                                visibleTodos == "completed" && "active"
-                            }`}
-                            id="completed"
-                            onClick={() => setVisibleTodos("completed")}
-                        >
-                            Completed
-                        </button>
-                    </Box>
-                    <Box className="clear" data-theme={colorTheme}>
-                        <button
-                            className="clear-btn"
-                            data-theme={colorTheme}
-                            onClick={() => dispatch(clearCompleted({ todos }))}
-                        >
-                            Clear Completed
-                        </button>
-                    </Box>
-                </Box>
-            </Box>
+  return (
+    <Box className="Card">
+      <Box className="todo_list">
+        {filteredTodos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            todoItemRepository={todoItemRepository}
+          />
+        ))}
+        <Box className="controls" data-theme={theme}>
+          <Box>
+            <span>{filteredTodos.length | 0} items left</span>
+          </Box>
+          <Box className="segregate" data-theme={theme}>
+            <button
+              className={`segregate-btn ${visible == "all" && "active"}`}
+              id="all"
+              onClick={() => setVisible("all")}
+            >
+              All
+            </button>
+            <button
+              className={`segregate-btn ${visible == "active" && "active"}`}
+              id="active"
+              onClick={() => setVisible("active")}
+            >
+              Active
+            </button>
+            <button
+              className={`segregate-btn ${visible == "completed" && "active"}`}
+              id="completed"
+              onClick={() => setVisible("completed")}
+            >
+              Completed
+            </button>
+          </Box>
+          <Box className="clear" data-theme={theme}>
+            <button
+              className="clear-btn"
+              data-theme={theme}
+              onClick={() => todoListRepository.clearCompleted()}
+            >
+              Clear Completed
+            </button>
+          </Box>
         </Box>
-    );
+      </Box>
+    </Box>
+  );
 };
 
 export default Todolist;
+function getRepository(
+  todoRepository: TodoListRepository & TodoItemRepository
+) {
+  const todoListRepository: TodoListRepository = todoRepository;
+  const todoItemRepository: TodoItemRepository = todoRepository;
+  return { todoListRepository, todoItemRepository };
+}
+
+function getFiltered(
+  todoListRepository: TodoListRepository,
+  visible: VisibleType
+) {
+  return todoListRepository.currents(visible);
+}
+
+function setupEffect(todos: Todo[]) {
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+}

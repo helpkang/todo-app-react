@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-// export interface TodoState {
-//     todos: { [id: number; name: string; completed: boolean] };
-// }
-
-export interface TodosType {
-    id: number;
-    name: string;
-    completed: boolean;
-}
+import { Todo } from "../ioc/interfaceRepository";
 
 const todos = localStorage.getItem("todos") || [];
 
@@ -18,34 +9,22 @@ if (typeof todos === "string") {
     parsed = JSON.parse(todos);
 }
 
-const initialState: TodosType[] = parsed || [];
+const initialState: Todo[] = parsed || [];
 
 const TodoSlice = createSlice({
     name: "todo",
-    initialState: { value: initialState },
+    initialState:  initialState,
     reducers: {
-        addTodo: (state, action) => {
-            state.value.push(action.payload);
+        addTodo: (state, action:PayloadAction<Todo>) => {
+            state.push(action.payload);
         },
-        deleteTodo: (state, action) => {
-            state.value = state.value.filter(
-                (item) => item.id != action.payload.id
-            );
-        },
-        completeTodo: (state, action) => {
-            state.value.map((item) => {
-                if (item.id == action.payload.id) {
-                    item.completed = !item.completed;
-                }
-            });
-        },
-        clearCompleted: (state, action) => {
-            state.value = state.value.filter((item) => item.completed == false);
-        },
+        setTodo(_, action: PayloadAction<Todo[]>) {
+            return action.payload;
+        }
     },
 });
 
-export const { addTodo, deleteTodo, completeTodo, clearCompleted } =
+export const { addTodo, setTodo } =
     TodoSlice.actions;
 
 export default TodoSlice.reducer;
