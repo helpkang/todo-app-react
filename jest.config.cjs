@@ -1,11 +1,13 @@
 module.exports = {
   verbose: true,
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  testEnvironment: 'node',
-  roots: ['<rootDir>/src'],
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
+  roots: ["<rootDir>/src"],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    "^.+\\.tsx?$": "ts-jest",
   },
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  coverageDirectory: '<rootDir>/coverage',
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+  coverageDirectory: "<rootDir>/coverage",
+  resetMocks: false,
+  setupFiles: ["jest-localstorage-mock"],
+  testEnvironment: "jsdom",
 };
