@@ -1,21 +1,19 @@
-import { injectable } from "inversify";
-import { Todo } from "../../interfaceRepository";
-import { TodoRepository } from "../../interfaceRepository";
-import { addTodo, setTodo } from "../../../store/todos-slice";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store/store";
 import { v4 as uuidv4 } from "uuid";
-import { VisibleType } from "../../interfaceRepository";
+import { _useTodoStore } from "./_useTodoStore";
+
+export type Todo ={
+  id: string;
+  name: string;
+  completed: boolean;
+}
+
+export type VisibleType = "all" | "active" | "completed";
 
 export function useTodo() {
-  const todos = useSelector<RootState, Todo[]>((state) => state.todos);
-  const dispatch = useDispatch();
+  const { todos, saveTodoStore, addTodoStore } = _useTodoStore();
 
-  function getFiltered(todo: Todo){
+  function getFiltered(todo: Todo) {
     return todos.filter((item) => item.id !== todo.id);
-  }
-  function saveTodoStore(todos: Todo[]){
-    dispatch(setTodo(todos));
   }
 
   function remove(todo: Todo) {
@@ -28,7 +26,7 @@ export function useTodo() {
       alert("You have to entere a name");
       return;
     }
-    dispatch(addTodo({ id: uuidv4(), name, completed: false }));
+    addTodoStore({ id: uuidv4(), name, completed: false });
   }
 
   function toggle(todo: Todo) {
@@ -39,12 +37,12 @@ export function useTodo() {
       }
       return item;
     });
-    dispatch(setTodo(updatedTodos));
+    saveTodoStore(updatedTodos);
   }
 
   function clearCompleted() {
     const filteredTodos = todos.filter((item) => item.completed === false);
-    dispatch(setTodo(filteredTodos));
+    saveTodoStore(filteredTodos);
   }
 
   function currents(visibleType: VisibleType) {
@@ -66,3 +64,5 @@ export function useTodo() {
     currents,
   };
 }
+
+

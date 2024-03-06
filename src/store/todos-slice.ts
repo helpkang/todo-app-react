@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Todo } from "../ioc/interfaceRepository";
+import { Todo } from "../hooks/useTodo";
 
 const todos = localStorage.getItem("todos") || [];
 

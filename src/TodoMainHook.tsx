@@ -1,19 +1,10 @@
 import "./TodoMain.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Todolist from "./components/TodoList";
 import React from "react";
-import { useInjection } from "./ioc/injectionHooks";
-
-import { NewTodo } from "./components/NewTodo";
-import {
-  Todo,
-  TodoRepository,
-  TodoRepositoryToken,
-} from "./ioc/interfaceRepository";
 import { ThemeContext } from "./ThemeContext";
-import useTheme from "./ioc/impl/repository/useTheme";
-import { useTodo } from "./ioc/impl/repository/useTodo";
+import useTheme from "./hooks/useTheme";
+import { useTodo } from "./hooks/useTodo";
 import { NewTodoHook } from "./components/NewTodoHook";
 import TodolistHook from "./components/TodoListHook";
 
