@@ -1,5 +1,5 @@
 import sinon from "ts-sinon";
-import { Service } from "./service";
+import { Service } from "../service";
 
 describe("handler tests : ", () => {
   beforeEach(() => {
