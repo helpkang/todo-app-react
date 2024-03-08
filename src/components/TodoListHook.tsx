@@ -4,7 +4,7 @@ import "./TodoList.css";
 import { memo, useContext, useEffect, useMemo, useState } from "react";
 import { ThemeContext } from "../ThemeContext";
 import TodoItemHook from "./TodoItemHook";
-import { Todo, VisibleType } from "../hooks/useTodo";
+import { Todo, VisibleType } from "../hooks/useTodoService";
 
 export interface TodoListProps {
   remove: (todo: Todo) => void;

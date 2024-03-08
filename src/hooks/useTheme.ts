@@ -11,7 +11,7 @@ function useTheme() {
   const  [theme, setTheme] = useLocalStorage<ThemeType>('theme', 'dark');
 
   useEffect(() => {
-    _setBodyColor(theme);
+    doBodyColor(theme);
   }, [theme]);
 
 
@@ -20,7 +20,7 @@ function useTheme() {
     setTheme(toggle);
   };
 
-  const _setBodyColor =(color: string)=> {
+  const doBodyColor =(color: string)=> {
     theme === "light"
       ? (document.body.style.backgroundColor = bgLight)
       : (document.body.style.backgroundColor = bgDark);

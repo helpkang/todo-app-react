@@ -1,7 +1,7 @@
 import "./TodoList.css";
 import { Box } from "@mui/material";
 import IconCross from "../assets/iconCross.svg";
-import { Todo } from "../hooks/useTodo";
+import { Todo } from "../hooks/useTodoService";
 import { memo } from "react";
 export type TodoItemProps = {
   todo: Todo;

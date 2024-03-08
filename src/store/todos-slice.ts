@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Todo } from "../hooks/useTodo";
+import { Todo } from "../hooks/useTodoService";
 
 const todosString = localStorage.getItem("todos") || [];
 

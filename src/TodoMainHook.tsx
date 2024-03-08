@@ -4,18 +4,18 @@ import Header from "./components/Header";
 import React from "react";
 import { ThemeContext } from "./ThemeContext";
 import useTheme from "./hooks/useTheme";
-import { useTodo } from "./hooks/useTodo";
+import { useTodoService } from "./hooks/useTodoService";
 import { NewTodoHook } from "./components/NewTodoHook";
 import TodolistHook from "./components/TodoListHook";
-
+//Container component TodoConatiner
 const TodoMainHook: React.FC = () => {
-  const { todos, remove, add, toggle, clearCompleted, currents } = useTodo();
+  const { todos, remove, add, toggle, clearCompleted, currents, addError, setAddError } = useTodoService();
   const theme = useTheme();
   return (
     <ThemeContext.Provider value={theme}>
       <div className="container" data-theme={theme}>
         <Header />
-        <NewTodoHook add={add} />
+        <NewTodoHook add={add} addError={addError} setAddError={setAddError}/>
         <TodolistHook
           todos={todos}
           remove={remove}

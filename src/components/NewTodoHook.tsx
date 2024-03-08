@@ -1,15 +1,25 @@
 import { Box } from "@mui/material";
-import React, { memo, useContext } from "react";
-import useLocalStorage from "use-local-storage";
+import React, { memo, useContext, useState } from "react";
 import { ThemeContext } from "../ThemeContext";
 
 type NewTodoProps = {
   add: (name: string) => void;
+  addError: string;
+  setAddError: (error: string) => void;
 };
-export const NewTodoHook = memo(({add }: NewTodoProps) => {
-  const [name, setName] = useLocalStorage<string>("name", "");
+export const NewTodoHook = memo(({ add, addError, setAddError }: NewTodoProps) => {
+  const [name, setName] = useState("");
   const { theme } = useContext(ThemeContext);
 
+  function updateName(e: React.ChangeEvent<HTMLInputElement>) {
+    setName(e.target.value);
+    setAddError("");
+  }
+
+  function handleAdd() {
+    add(name);
+    setName("");
+  }
 
   return (
     <Box className="new_todo" data-theme={theme}>
@@ -28,19 +38,17 @@ export const NewTodoHook = memo(({add }: NewTodoProps) => {
         value={name}
         type="text"
         placeholder="Create a new todo"
-        onChange={(e) => setName(e.target.value)}
+        onChange={updateName}
       />
       <Box>
         <button
           className="new_todo-btn"
-          onClick={() => {
-            add(name);
-            setName("");
-          }}
+          onClick={handleAdd}
         >
           Add
         </button>
       </Box>
+      {addError && <Box className="error">{addError}</Box>}
     </Box>
   );
 });

@@ -1,14 +1,15 @@
 import { useState } from "react";
 import sinon from "ts-sinon";
-import * as todoStore from "../_useTodoStore";
-import { Todo } from "../useTodo";
+import * as todoStore from "../useTodoRepository";
+import { Todo } from "../useTodoService";
 
 export function initTodoStoreMock(initTodos: Todo[] = []) {
-  sinon.stub(todoStore, "_useTodoStore").callsFake(() => {
+  sinon.stub(todoStore, "useTodoRepository").callsFake(() => {
     const [todos, saveTodoStore] = useState<Todo[]>(initTodos);
-    function addTodoStore(todo: Todo) {
+    const [addError, setAddError] = useState("");
+    function addTodo(todo: Todo) {
       saveTodoStore([...todos, todo]);
     }
-    return { todos, saveTodoStore, addTodoStore };
+    return { todos, saveTodo: saveTodoStore, addTodo, addError, setAddError };
   });
 }
