@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 const phoneRegex = /^[0-9]{9,10}$/;
 
-export function _userVarificationPhone(onPhoneChange?: (phone: string) => void):{
+export type UserVarificationPhone = {
   phone: string;
   setPhone: (phone: string) => void;
   isPhoneValid: boolean;
+};
 
-} {
+export function _userVarificationPhone(
+  onPhoneChange?: (phone: string) => void
+): UserVarificationPhone {
   const [phone, setPhone] = useState<string>("");
   const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
 
@@ -19,12 +22,12 @@ export function _userVarificationPhone(onPhoneChange?: (phone: string) => void):
   return { phone, setPhone, isPhoneValid };
 }
 
-export function _useChangeCounter() {
+export function _useCounterChangePhone() {
   const count = useSelector((state: any) => state.count);
   const dispatch = useDispatch();
-  function increment () {
+  function increment() {
     dispatch({ type: "INCREMENT" });
-  };
+  }
   return { count, increment };
 }
 

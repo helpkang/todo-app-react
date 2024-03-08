@@ -1,13 +1,12 @@
 import { Box } from "@mui/material";
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import useLocalStorage from "use-local-storage";
-import { TodoNewRepository, TodoRepository } from "../ioc/interfaceRepository";
 import { ThemeContext } from "../ThemeContext";
 
 type NewTodoProps = {
   add: (name: string) => void;
 };
-export const NewTodoHook = ({add }: NewTodoProps) => {
+export const NewTodoHook = memo(({add }: NewTodoProps) => {
   const [name, setName] = useLocalStorage<string>("name", "");
   const { theme } = useContext(ThemeContext);
 
@@ -44,4 +43,4 @@ export const NewTodoHook = ({add }: NewTodoProps) => {
       </Box>
     </Box>
   );
-};
+});

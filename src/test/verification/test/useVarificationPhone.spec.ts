@@ -32,52 +32,40 @@ describe("useVarificationPhone tests : ", () => {
     act(() => {
       hooks.result.current.setPhone("1234567890");
     });
-    waitFor(() => {
-      expect(hooks.result.current.isPhoneValid).toBeTruthy();
-      expect(hooks.result.current.count).toBe(1);
-    });
+    expect(hooks.result.current.isPhoneValid).toBeTruthy();
+    expect(hooks.result.current.count).toBe(1);
     act(() => {
       hooks.result.current.setPhone("1234567890a");
     });
-    waitFor(() => {
-      expect(hooks.result.current.isPhoneValid).not.toBeTruthy();
-      expect(hooks.result.current.count).toBe(2);
-    });
+    expect(hooks.result.current.isPhoneValid).not.toBeTruthy();
+    expect(hooks.result.current.count).toBe(2);
   });
 
   it("phone number digit 11 success", () => {
     act(() => {
       hooks.result.current.setPhone("12345678901");
     });
-    waitFor(() => {
-      expect(hooks.result.current.phone).toBe("12345678901");
-      expect(hooks.result.current.isPhoneValid).not.toBeTruthy();
-    });
+    expect(hooks.result.current.phone).toBe("12345678901");
+    expect(hooks.result.current.isPhoneValid).not.toBeTruthy();
   });
 
   it("phone number digit 9 fail", () => {
     act(() => {
       hooks.result.current.setPhone("123456789");
     });
-    waitFor(() => {
-      expect(hooks.result.current.isPhoneValid).toBeTruthy();
-    });
+    expect(hooks.result.current.isPhoneValid).toBeTruthy();
   });
   it("phone albhabet fail", () => {
     act(() => {
       hooks.result.current.setPhone("123456789a");
     });
-    waitFor(() => {
-      expect(hooks.result.current.isPhoneValid).not.toBeTruthy();
-    });
+    expect(hooks.result.current.isPhoneValid).not.toBeTruthy();
   });
 
   it("increment count", async () => {
     act(() => {
       hooks.result.current.increment();
     });
-    await waitFor(() => {
-      expect(hooks.result.current.count).toBe(1);
-    });
+    expect(hooks.result.current.count).toBe(1);
   });
 });

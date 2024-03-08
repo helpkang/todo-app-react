@@ -1,30 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Todo } from "../hooks/useTodo";
 
-const todos = localStorage.getItem("todos") || [];
+const todosString = localStorage.getItem("todos") || [];
 
-let parsed;
+let todos: Todo[] = [];
 
-if (typeof todos === "string") {
-    parsed = JSON.parse(todos);
+if (typeof todosString === "string") {
+  todos = JSON.parse(todosString);
 }
 
-const initialState: Todo[] = parsed || [];
-
 const TodoSlice = createSlice({
-    name: "todo",
-    initialState:  initialState,
-    reducers: {
-        addTodo: (state, action:PayloadAction<Todo>) => {
-            state.push(action.payload);
-        },
-        setTodo(_, action: PayloadAction<Todo[]>) {
-            return action.payload;
-        }
+  name: "todo",
+  initialState: todos || [],
+  reducers: {
+    addTodo: (state, action: PayloadAction<Todo>) => {
+      state.push(action.payload);
     },
+    setTodo(_, action: PayloadAction<Todo[]>) {
+      return action.payload;
+    },
+  },
 });
 
-export const { addTodo, setTodo } =
-    TodoSlice.actions;
+export const { addTodo, setTodo } = TodoSlice.actions;
 
 export default TodoSlice.reducer;

@@ -1,11 +1,14 @@
 import {
   _userVarificationPhone,
-  _useChangeCounter,
+  _useCounterChangePhone,
 } from "./_userVarificationPhone";
 
+/**
+ * @returns {phone, setPhone, isPhoneValid, count, increment}
+ */
 export function useVarificationPhone() {
-  const { count, increment } = _useChangeCounter();
-  const onPhoneChange=(phone: string)=> {
+  const { count, increment } = _useCounterChangePhone();
+  function onPhoneChange(phone: string) {
     increment();
   }
   const { phone, setPhone, isPhoneValid } =
