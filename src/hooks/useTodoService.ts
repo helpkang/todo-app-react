@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { useTodoRepository } from "./useTodoRepository";
 import { useCallback } from "react";
+import { useTodoRepository } from "../zustand/useTodoRepository";
+import { useTodoErrorRepository } from "../zustand/useTodoErrorRepository";
 
 export type Todo = {
   id: string;
@@ -11,11 +12,12 @@ export type Todo = {
 export type VisibleType = "all" | "active" | "completed";
 
 export function useTodoService() {
-  const { todos, saveTodo, addTodo, addError, setAddError } = useTodoRepository();
+  const { todos, saveTodo, addTodo } = useTodoRepository();
+  const {error, setError} = useTodoErrorRepository();
 
   const add = useCallback((name: string) => {
     if (!name) {
-      setAddError("You have to entere a name");
+      !error && setError("You have to entere a name");
       return;
     }
     addTodo({ id: uuidv4(), name, completed: false });
@@ -62,8 +64,8 @@ export function useTodoService() {
     toggle,
     clearCompleted,
     currents,
-    addError,
-    setAddError,
+    error,
+    setError,
   };
 }
 

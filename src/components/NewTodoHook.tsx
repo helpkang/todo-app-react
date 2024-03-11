@@ -1,19 +1,19 @@
 import { Box } from "@mui/material";
-import React, { memo, useContext, useState } from "react";
-import { ThemeContext } from "../ThemeContext";
+import React, { memo, useState } from "react";
+import { useThemeContextRepository } from "../zustand/useThemeContextRepository";
 
 type NewTodoProps = {
   add: (name: string) => void;
-  addError: string;
-  setAddError: (error: string) => void;
+  error: string;
+  setError: (error: string) => void;
 };
-export const NewTodoHook = memo(({ add, addError, setAddError }: NewTodoProps) => {
+export const NewTodoHook = memo(({ add, error, setError }: NewTodoProps) => {
   const [name, setName] = useState("");
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useThemeContextRepository();
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
-    setAddError("");
+    error && setError("");
   }
 
   function handleAdd() {
@@ -48,7 +48,7 @@ export const NewTodoHook = memo(({ add, addError, setAddError }: NewTodoProps) =
           Add
         </button>
       </Box>
-      {addError && <Box className="error">{addError}</Box>}
+      {error && <Box className="error">{error}</Box>}
     </Box>
   );
 });

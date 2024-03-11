@@ -4,37 +4,51 @@ import { initTodoStoreMock } from "./initTodoStoreMock";
 import sinon from "ts-sinon";
 
 describe("useTodo", () => {
+  const visibleTypeMock: VisibleType = "all";
 
-    const todosMock: Todo[] = [
-        { id: "1", name: "Todo 1", completed: false },
-        { id: "2", name: "Todo 2", completed: true },
-    ];
-    const visibleTypeMock: VisibleType = "all";
-
-    beforeEach(() => {
-        initTodoStoreMock(todosMock);
+  beforeEach(() => {
+    const { result } = renderHook(() => useTodoService());
+    act(() => {
+      result.current.add("Todo 1");
     });
-
-    afterEach(() => {
-        sinon.restore();
+    act(() => {
+      result.current.add("Todo 2");
     });
-
-    it("should add a new todo", () => {
-        const { result } = renderHook(() => useTodoService());
-        act(() => {
-            result.current.add("New Todo");
-        });
-        expect(result.current.todos).toHaveLength(3);
-        expect(result.current.todos[2].name).toBe("New Todo");
+    act(() => {
+      result.current.toggle(result.current.todos[1]);
     });
-    it("should remove clear", () => {
-        const { result } = renderHook(() => useTodoService());
-        act(() => {
-            result.current.clearCompleted();
-        });
-        expect(result.current.todos).toHaveLength(1);
-        expect(result.current.todos[0].name).toBe("Todo 1");
-    });
+  });
 
- 
+  afterEach(() => {
+    const { result } = renderHook(() => useTodoService());
+    act(() => {
+      result.current.clearCompleted();
+    });
+    const currentTodos = [...result.current.todos];
+    currentTodos.forEach((todo) => {
+      act(() => {
+        result.current.toggle(todo);
+      });
+    });
+    act(() => {
+      result.current.clearCompleted();
+    });
+  });
+
+  it("should add a new todo", () => {
+    const { result } = renderHook(() => useTodoService());
+    act(() => {
+      result.current.add("New Todo");
+    });
+    expect(result.current.todos).toHaveLength(3);
+    expect(result.current.todos[2].name).toBe("New Todo");
+  });
+  it("should remove clear", () => {
+    const { result } = renderHook(() => useTodoService());
+    act(() => {
+      result.current.clearCompleted();
+    });
+    expect(result.current.todos).toHaveLength(1);
+    expect(result.current.todos[0].name).toBe("Todo 1");
+  });
 });

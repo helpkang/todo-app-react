@@ -2,9 +2,10 @@ import { Box } from "@mui/material";
 import "./TodoList.css";
 
 import { memo, useContext, useEffect, useMemo, useState } from "react";
-import { ThemeContext } from "../ThemeContext";
 import TodoItemHook from "./TodoItemHook";
 import { Todo, VisibleType } from "../hooks/useTodoService";
+import { useTheme } from "@emotion/react";
+import { useThemeContextRepository } from "../zustand/useThemeContextRepository";
 
 export interface TodoListProps {
   remove: (todo: Todo) => void;
@@ -15,7 +16,7 @@ export interface TodoListProps {
 }
 const TodolistHook = memo(
   ({ todos, remove, toggle, clearCompleted, currents }: TodoListProps) => {
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useThemeContextRepository();
     const [visible, setVisible] = useState<VisibleType>("all");
     const filteredTodos = useMemo(() => currents(visible), [visible, todos]);
 
