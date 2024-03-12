@@ -1,12 +1,11 @@
 import "./TodoMain.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import React, { useEffect } from "react";
 import { useTodoService } from "./hooks/useTodoService";
 import { NewTodoHook } from "./components/NewTodoHook";
 import TodolistHook from "./components/TodoListHook";
-import { useThemeContextRepository } from "./zustand/useThemeContextRepository";
-//Container component TodoConatiner
+import { useThemeService } from "./service/useThemeService";
+import { useEffect } from "react";
 const TodoMainHook = () => {
   const {
     todos,
@@ -18,8 +17,17 @@ const TodoMainHook = () => {
     error,
     setError,
   } = useTodoService();
-  const { theme } = useThemeContextRepository();
-  useEffect(() => {}, [theme]);
+  
+  const { theme } = useThemeService();
+  useEffect(() => {
+    console.log("theme change", theme);
+    const bgLight: string = "hsl(0, 0%, 98%)";
+    const bgDark: string = "hsl(235, 21%, 11%)";
+    theme === "light"
+      ? (document.body.style.backgroundColor = bgLight)
+      : (document.body.style.backgroundColor = bgDark);
+  }, [theme]);
+
   return (
     <div className="container" data-theme={theme}>
       <Header />

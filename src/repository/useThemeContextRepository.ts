@@ -23,16 +23,3 @@ export const useThemeContextRepository = create(
     }
   )
 );
-
-useThemeContextRepository.subscribe(({ theme }) => {
-  changeBackround(theme);
-});
-
-function changeBackround(theme: string) {
-  const bgLight: string = "hsl(0, 0%, 98%)";
-  const bgDark: string = "hsl(235, 21%, 11%)";
-  theme === "light"
-    ? (document.body.style.backgroundColor = bgLight)
-    : (document.body.style.backgroundColor = bgDark);
-}
-changeBackround(useThemeContextRepository.getState().theme);

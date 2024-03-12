@@ -1,12 +1,12 @@
 import "./Header.css";
 import iconMoon from "../assets/iconMoon.svg";
 import iconSun from "../assets/iconSun.svg";
-import { useThemeContextRepository } from "../zustand/useThemeContextRepository";
+import { useThemeService } from "../service/useThemeService";
 
 
 
 const Header = () => {
-  const { theme, toggle} = useThemeContextRepository();
+  const { theme, toggle} = useThemeService();
   return (
     <div className="header">
       <h1>T O D O</h1>

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { useCallback } from "react";
-import { useTodoRepository } from "../zustand/useTodoRepository";
-import { useTodoErrorRepository } from "../zustand/useTodoErrorRepository";
+import { useTodoRepository } from "../repository/useTodoRepository";
+import { useTodoErrorRepository } from "../repository/useTodoErrorRepository";
 
 export type Todo = {
   id: string;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import sinon from "ts-sinon";
-import * as todoStore from "../../zustand/useTodoRepository";
+import * as todoStore from "../../repository/useTodoRepository";
 import { Todo } from "../useTodoService";
 
 export function initTodoStoreMock(initTodos: Todo[] = []) {

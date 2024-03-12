@@ -5,7 +5,7 @@ import { memo, useContext, useEffect, useMemo, useState } from "react";
 import TodoItemHook from "./TodoItemHook";
 import { Todo, VisibleType } from "../hooks/useTodoService";
 import { useTheme } from "@emotion/react";
-import { useThemeContextRepository } from "../zustand/useThemeContextRepository";
+import { useThemeService } from "../service/useThemeService";
 
 export interface TodoListProps {
   remove: (todo: Todo) => void;
@@ -16,7 +16,7 @@ export interface TodoListProps {
 }
 const TodolistHook = memo(
   ({ todos, remove, toggle, clearCompleted, currents }: TodoListProps) => {
-    const { theme } = useThemeContextRepository();
+    const { theme } = useThemeService();
     const [visible, setVisible] = useState<VisibleType>("all");
     const filteredTodos = useMemo(() => currents(visible), [visible, todos]);
 

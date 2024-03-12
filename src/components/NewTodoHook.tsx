@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { memo, useState } from "react";
-import { useThemeContextRepository } from "../zustand/useThemeContextRepository";
+import { useThemeService } from "../service/useThemeService";
 
 type NewTodoProps = {
   add: (name: string) => void;
@@ -9,7 +9,7 @@ type NewTodoProps = {
 };
 export const NewTodoHook = memo(({ add, error, setError }: NewTodoProps) => {
   const [name, setName] = useState("");
-  const { theme } = useThemeContextRepository();
+  const { theme } = useThemeService();
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
