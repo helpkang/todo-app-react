@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { memo, useState } from "react";
-import { useThemeService } from "../service/useThemeService";
+import { useThemeService } from "../hooks/service/useThemeService";
 
 type NewTodoProps = {
   add: (name: string) => void;

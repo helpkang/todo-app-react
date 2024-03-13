@@ -1,10 +1,10 @@
 import "./TodoMain.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { useTodoService } from "./hooks/useTodoService";
+import { useTodoService } from "./hooks/service/useTodoService";
 import { NewTodoHook } from "./components/NewTodoHook";
 import TodolistHook from "./components/TodoListHook";
-import { useThemeService } from "./service/useThemeService";
+import { useThemeService } from "./hooks/service/useThemeService";
 import { useEffect } from "react";
 const TodoMainHook = () => {
   const {

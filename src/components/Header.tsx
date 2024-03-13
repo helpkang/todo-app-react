@@ -1,7 +1,7 @@
 import "./Header.css";
 import iconMoon from "../assets/iconMoon.svg";
 import iconSun from "../assets/iconSun.svg";
-import { useThemeService } from "../service/useThemeService";
+import { useThemeService } from "../hooks/service/useThemeService";
 
 
 

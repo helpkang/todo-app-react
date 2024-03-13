@@ -7,7 +7,7 @@ type TodoErrorState = {
 };
 
 const name = "todoErrorRepository";
-export const useTodoErrorRepository = create(
+export const useTodoErrorStoreRepository = create(
   devtools<TodoErrorState>(
     (set) => ({
       error: "",
@@ -16,7 +16,7 @@ export const useTodoErrorRepository = create(
     }),
     {
       name: "zustant/todoErrorRepository",
-      enabled: true,
+      enabled: process.env.NODE_ENV === 'development',
     }
   )
 );

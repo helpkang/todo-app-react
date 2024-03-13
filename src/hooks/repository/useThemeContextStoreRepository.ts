@@ -9,7 +9,7 @@ type ThemeTypeState = {
   setTheme: (theme: ThemeType) => void;
 };
 
-export const useThemeContextRepository = create(
+export const useThemeContextStoreRepository = create(
   persist<ThemeTypeState>(
     (set) => ({
       theme: "dark",

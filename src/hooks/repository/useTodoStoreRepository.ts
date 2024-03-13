@@ -1,13 +1,18 @@
 import { create } from "zustand";
 import { persist, createJSONStorage, devtools } from "zustand/middleware";
 
-import { Todo } from "../hooks/useTodoService";
-
-type TodoState = {
-  todos: Todo[];
-  addTodo: (todo: Todo) => void;
-  saveTodo: (todos: Todo[]) => void;
+export type TodoRModel = {
+  id: string;
+  name: string;
+  completed: boolean;
 };
+
+export type TodoState = {
+  todos: TodoRModel[];
+  addTodo: (todo: TodoRModel) => void;
+  saveTodo: (todos: TodoRModel[]) => void;
+};
+
 export const useTodoRepository = create(
   devtools(
     persist<TodoState>(
@@ -23,7 +28,8 @@ export const useTodoRepository = create(
     ),
     {
       name: "zustand/todoRepository",
-      enabled: true,
+      
+      enabled:  process.env.NODE_ENV === 'development',
     }
   )
 );

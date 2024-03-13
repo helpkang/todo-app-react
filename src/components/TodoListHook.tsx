@@ -3,9 +3,9 @@ import "./TodoList.css";
 
 import { memo, useContext, useEffect, useMemo, useState } from "react";
 import TodoItemHook from "./TodoItemHook";
-import { Todo, VisibleType } from "../hooks/useTodoService";
+import { Todo, VisibleType } from "../hooks/service/useTodoService";
 import { useTheme } from "@emotion/react";
-import { useThemeService } from "../service/useThemeService";
+import { useThemeService } from "../hooks/service/useThemeService";
 
 export interface TodoListProps {
   remove: (todo: Todo) => void;

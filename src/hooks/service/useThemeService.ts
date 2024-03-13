@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import {
   ThemeType,
-  useThemeContextRepository,
-} from "../repository/useThemeContextRepository";
+  useThemeContextStoreRepository,
+} from "../repository/useThemeContextStoreRepository";
 
 export function useThemeService(init = false) {
-  const { theme, toggle } = useThemeContextRepository();
+  const { theme, toggle } = useThemeContextStoreRepository();
   if (init) {
     initEffect(theme);
   }
@@ -14,7 +14,6 @@ export function useThemeService(init = false) {
 
 function initEffect(theme: ThemeType) {
   useEffect(() => {
-    console.log("theme change", theme);
     const bgLight: string = "hsl(0, 0%, 98%)";
     const bgDark: string = "hsl(235, 21%, 11%)";
     theme === "light"
