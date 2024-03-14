@@ -28,7 +28,6 @@ export function useTodoAdapter() {
 
   const updateTodo = useMutation({
     mutationFn: (todo: TodoAPIModel) => {
-      console.log('todo', todo);
       return TodoAPI.updateTodo(todo)
     },
     onSuccess: () => {
