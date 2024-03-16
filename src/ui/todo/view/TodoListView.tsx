@@ -1,21 +1,21 @@
 import { Box } from "@mui/material";
-import "./TodoList.css";
+import "../css/TodoList.css";
 
 import { memo, useContext, useEffect, useMemo, useState } from "react";
-import TodoItemHook from "./TodoItemHook";
-import { Todo, VisibleType } from "../hooks/service/useTodoService";
+import TodoItemView from "./TodoItemView";
+import { Todo, VisibleType } from "../service/useTodoService";
 import { useTheme } from "@emotion/react";
-import { useThemeService } from "../hooks/service/useThemeService";
+import { useThemeService } from "../../../hooks/service/useThemeService";
 
-export interface TodoListProps {
+export interface TodoListViewProps {
   remove: (todo: Todo) => void;
   toggle: (todo: Todo) => void;
   clearCompleted: () => void;
   currents: (visibleType: VisibleType) => Todo[];
   todos: Todo[];
 }
-const TodolistHook = memo(
-  ({ todos, remove, toggle, clearCompleted, currents }: TodoListProps) => {
+const TodolistView = memo(
+  ({ todos, remove, toggle, clearCompleted, currents }: TodoListViewProps) => {
     const { theme } = useThemeService();
     const [visible, setVisible] = useState<VisibleType>("all");
     const filteredTodos = useMemo(() => currents(visible), [visible, todos]);
@@ -24,7 +24,7 @@ const TodolistHook = memo(
       <Box className="Card">
         <Box className="todo_list">
           {filteredTodos.map((todo) => (
-            <TodoItemHook
+            <TodoItemView
               key={todo.id}
               todo={todo}
               toggle={toggle}
@@ -76,4 +76,4 @@ const TodolistHook = memo(
   }
 );
 
-export default TodolistHook;
+export default TodolistView;

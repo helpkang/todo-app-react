@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useTodoRepository } from "../repository/useTodoStoreRepository";
 import { useTodoErrorStoreRepository } from "../repository/useTodoErrorStoreRepository";
 import { useTodoAdapter } from "../adapter/useTodoAdapter";
-import { useProgressRepository } from "../repository/useProgressRepository";
+import { useProgressRepository } from "../../../hooks/repository/useProgressRepository";
 
 export type Todo = {
   id: string;
@@ -37,14 +37,14 @@ export function useTodoService() {
 
   const remove = useCallback(
     (todo: Todo) => {
-      const filtertodo = getRemoveTodos(todos, todo);
+      // const filtertodo = getRemoveTodos(todos, todo);
       todoAdapter.deleteTodo.mutate(todo.id);
       setProgress({
         isPending: todoAdapter.deleteTodo.isPending,
         error: todoAdapter.deleteTodo.error,
       });
     },
-    [todos, todoAdapter.deleteTodo]
+    [todoAdapter.deleteTodo]
   );
 
   const toggle = useCallback(

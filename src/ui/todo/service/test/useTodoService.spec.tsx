@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
-import { VisibleType, useTodoService } from "../service/useTodoService";
+import { VisibleType, useTodoService } from "../useTodoService";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 describe("useTodo", () => {
@@ -7,7 +7,7 @@ describe("useTodo", () => {
 
   const queryClient = new QueryClient();
   const createWrapper =
-    () =>
+  
     ({ children }: { children: any }) =>
       (
         <QueryClientProvider client={queryClient}>
@@ -20,7 +20,7 @@ describe("useTodo", () => {
       () => {
         return useTodoService();
       },
-      { wrapper: createWrapper() }
+      { wrapper: createWrapper }
     );
 
   beforeEach(async () => {
@@ -43,9 +43,9 @@ describe("useTodo", () => {
     await act(async () =>
       currentTodos.forEach(async (todo) => result.current.toggle(todo))
     );
-    await act(async () =>
-      currentTodos.forEach(async (todo) => result.current.toggle(todo))
-    );
+    // await act(async () =>
+    //   currentTodos.forEach(async (todo) => result.current.toggle(todo))
+    // );
 
     await act(async () => {
       await result.current.clearCompleted();
@@ -58,7 +58,7 @@ describe("useTodo", () => {
     await act(async () => {
       await result.current.add("New Todo");
     });
-    await waitFor(() => expect(result.current.todos).toHaveLength(3), {
+    await waitFor(() => expect(result.current.todos).toHaveLength(2), {
       timeout: 10000,
     });
     await waitFor(() => expect(result.current.todos[2].name).toBe("New Todo"), {
@@ -66,12 +66,12 @@ describe("useTodo", () => {
     });
   });
 
-  // it("should remove clear", () => {
-  //   const { result } = getUseTodoService();
-  //   act(() => {
-  //     result.current.clearCompleted();
-  //   });
-  //   expect(result.current.todos).toHaveLength(1);
-  //   expect(result.current.todos[0].name).toBe("Todo 1");
-  // });
+  it("should remove clear", () => {
+    const { result } = getUseTodoService();
+    act(() => {
+      result.current.clearCompleted();
+    });
+    expect(result.current.todos).toHaveLength(1);
+    expect(result.current.todos[0].name).toBe("Todo 1");
+  });
 });

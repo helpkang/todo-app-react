@@ -1,15 +1,15 @@
-import "./TodoList.css";
+import "../css/TodoList.css";
 import { Box } from "@mui/material";
-import IconCross from "../assets/iconCross.svg";
-import { Todo } from "../hooks/service/useTodoService";
+import IconCross from "../../../assets/iconCross.svg";
+import { Todo } from "../service/useTodoService";
 import { memo } from "react";
-export type TodoItemProps = {
+export type TodoItemViewProps = {
   todo: Todo;
   toggle: (todo: Todo)=>void;
   remove: (todo: Todo)=>void;
 };
 
-const TodoItemHook = memo(({ todo, toggle, remove }: TodoItemProps) => {
+const TodoItemView = memo(({ todo, toggle, remove }: TodoItemViewProps) => {
   const { name, completed } = todo;
 
   return (
@@ -47,4 +47,4 @@ const TodoItemHook = memo(({ todo, toggle, remove }: TodoItemProps) => {
   );
 });
 
-export default TodoItemHook;
+export default TodoItemView;

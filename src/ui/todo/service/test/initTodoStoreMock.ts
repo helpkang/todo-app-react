@@ -1,7 +1,7 @@
 import { useState } from "react";
 import sinon from "ts-sinon";
-import * as todoStore from "../repository/useTodoStoreRepository";
-import { Todo } from "../service/useTodoService";
+import * as todoStore from "../../repository/useTodoStoreRepository";
+import { Todo } from "../useTodoService";
 
 export function initTodoStoreMock(initTodos: Todo[] = []) {
   // sinon.stub(todoStore, "useTodoRepository").callsFake(() => {

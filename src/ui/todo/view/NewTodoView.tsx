@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import React, { memo, useState } from "react";
-import { useThemeService } from "../hooks/service/useThemeService";
+import { useThemeService } from "../../../hooks/service/useThemeService";
 
-type NewTodoProps = {
+type NewTodoViewProp = {
   add: (name: string) => void;
   error: string;
   setError: (error: string) => void;
 };
-export const NewTodoHook = memo(({ add, error, setError }: NewTodoProps) => {
+export const NewTodoView = memo(({ add, error, setError }: NewTodoViewProp) => {
   const [name, setName] = useState("");
   const { theme } = useThemeService();
 
@@ -35,6 +35,7 @@ export const NewTodoHook = memo(({ add, error, setError }: NewTodoProps) => {
       ></Box>
       <input
         required
+        name="todo"
         value={name}
         type="text"
         placeholder="Create a new todo"
