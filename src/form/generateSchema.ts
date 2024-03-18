@@ -1,5 +1,5 @@
 import * as z from "zod";
-import {ZodTypeAny, ZodString, ZodArray, ZodNumber } from "zod";
+import { ZodTypeAny, ZodString, ZodArray, ZodNumber } from "zod";
 
 export type FormField = {
   name: string;
@@ -9,50 +9,71 @@ export type FormField = {
   min?: number;
   max?: number;
 };
-// Generate Zod schema dynamically based on form fields
-export function generateSchema(fields: FormField[]) {
+
+export function genDynamicSchema(fields: FormField[]) {
   const schemaShape: Record<string, ZodTypeAny> = {};
   fields.forEach((field) => {
-    let fieldSchema: z.ZodTypeAny;
-    switch (field.type) {
-      case "text":
-        fieldSchema = z.string();
-        break;
-      case "email":
-        fieldSchema = z.string();
-        break;
-      case "number":
-        fieldSchema = z.number();
-        break;
-      default:
-        fieldSchema = z.string(); // Default to string type
-    }
-    if (field.required) {
-      if (
-        fieldSchema instanceof ZodString ||
-        fieldSchema instanceof ZodArray
-      ) {
-        fieldSchema = fieldSchema.min(1, `${field.name} is required`);
-        if (field.type === "email") {
-          fieldSchema = (fieldSchema as ZodString).email("Invalid email address");
-        }
-      } else if (fieldSchema instanceof ZodNumber) { // Change ZodNumber to ZodString
-        let f:ZodNumber = fieldSchema;
-          if(field.min) {
-            f = f.min(field.min, `${field.name} is over ${field.min} value`);
-          }
-          if(field.max) {
-            f = f.max(field.max, `${field.name} is under ${field.max} value`);
-          }
-          fieldSchema = f;
-      } else {
-        fieldSchema = fieldSchema.nullable();
-      }
-    }
-    schemaShape[field.name] = fieldSchema;
+    let zodAny = createZod(field);
+    zodAny = getRequred(field, zodAny);
+    zodAny = getNumberMinMax(field, zodAny);
+    schemaShape[field.name] = zodAny;
   });
   return z.object(schemaShape);
 }
-export interface FormData {
-  [key: string]: string;
+
+function createZod(field: FormField) {
+  let zodAny: ZodTypeAny;
+  switch (field.type) {
+    case "text":
+      zodAny = z.string();
+      break;
+    case "email":
+      zodAny = z.string();
+      break;
+    case "number":
+      zodAny = z.string();
+      break;
+    default:
+      zodAny = z.string(); // Default to string type
+  }
+  return zodAny;
+}
+
+function getRequred(field: FormField, zodAny: ZodTypeAny): ZodTypeAny {
+  if (!field.required) {
+    return zodAny.nullable();
+  }
+
+
+  if (zodAny instanceof ZodString || zodAny instanceof ZodArray) {
+    zodAny = zodAny.min(1, `${field.name} is required`);
+    if (field.type === "email") {
+      zodAny = (zodAny as ZodString).email("Invalid email address");
+    }
+  }
+  if(field.type === "number"){
+    zodAny = (zodAny as ZodString).regex(/^[0-9]+$/, "Invalid number");
+  }
+  return zodAny;
+}
+
+function getNumberMinMax(field: FormField, zodAny: ZodTypeAny) {
+  if (!(zodAny instanceof ZodNumber)) {
+    return zodAny;
+  }
+  let zodNumber: ZodNumber = zodAny as ZodNumber;
+  // Change ZodNumber to ZodString
+  if (field.min) {
+    zodNumber = zodNumber.min(
+      field.min,
+      `${field.name} is over ${field.min} value`
+    );
+  }
+  if (field.max) {
+    zodNumber = zodNumber.max(
+      field.max,
+      `${field.name} is under ${field.max} value`
+    );
+  }
+  return zodNumber;
 }

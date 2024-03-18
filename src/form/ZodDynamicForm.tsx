@@ -1,33 +1,79 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FormField, FormData, generateSchema } from './generateSchema';
+import { Fragment } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormField, genDynamicSchema } from "./generateSchema";
+import { DefaultFormField } from "./DefaultFormField";
 
-interface Props {
+type ReactFormMap = {
+  [key: string]: ReactFormField;
+};
+type ZodDynamicFormProps = {
   fields: FormField[];
-}
+  onSubmit: (data: FormData) => void;
+  onFailed?: (errors: any) => void;
+  formMap?: ReactFormMap;
+  children?: React.ReactNode;
+};
 
-function ZodDynamicForm({ fields }: Props) {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(generateSchema(fields))
+export type FormData = {
+  [key: string]: string;
+};
+
+function ZodDynamicForm({
+  fields,
+  onSubmit,
+  onFailed,
+  formMap = {
+    default: DefaultFormField,
+  },
+  children,
+}: ZodDynamicFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(genDynamicSchema(fields)),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
-
+  const newFormMap = fillFormMap(fields, formMap);
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {fields.map((field, index) => (
-        <div key={index}>
-          <label htmlFor={field.name}>{field.label}:</label>
-          <input type={field.type} id={field.name} {...register(field.name, {valueAsNumber: field.type === 'number'})} />
-          {errors[field.name] && <p>{errors[field.name]?.message}</p>}
-        </div>
-      ))}
-      <button type="submit">Submit</button>
+    <form onSubmit={handleSubmit(onSubmit, onFailed)}>
+      {fields.map((field, index) => {
+        const MatchFrom: ReactFormField = newFormMap[field.name];
+        return (
+          <Fragment key={index}>
+            <MatchFrom field={field} register={register} errors={errors} />
+          </Fragment>
+        );
+      })}
+      {children}
     </form>
   );
 }
 
 export default ZodDynamicForm;
+
+export interface DefaultFormFieldProp {
+  field: FormField;
+  register: any;
+  errors: any;
+}
+
+type ReactFormField = (props: DefaultFormFieldProp) => JSX.Element;
+
+function fillFormMap(fields: FormField[], formMap: ReactFormMap) {
+  const newFormMap = {} as ReactFormMap;
+  fields.forEach((field) => {
+    const key = field.name;
+    let form = formMap[key];
+    if (!form) {
+      form = formMap.default;
+      if (!form) {
+        form = DefaultFormField;
+      }
+    }
+    newFormMap[key] = form;
+  });
+  return newFormMap;
+}

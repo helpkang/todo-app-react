@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import TodoContainer from "./ui/todo/TodoContiner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { FormValdationTest } from "./form/FormValdationTest";
+import { FormValdationTest } from "./form/from-sample/FormValdationTest";
 
 const queryClient = new QueryClient();
 
